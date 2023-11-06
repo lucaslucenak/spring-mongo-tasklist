@@ -79,6 +79,7 @@ public class UserService {
     @Transactional
     public void deleteUserById(String userId) {
         if (userRepository.existsById(userId)) {
+            taskService.deleteByUserId(userId);
             userRepository.deleteById(userId);
         } else {
             throw new ResourceNotFoundException("Resource: User. Not found with id: " + userId);

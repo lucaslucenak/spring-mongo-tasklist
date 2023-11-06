@@ -61,6 +61,11 @@ public class TaskService {
         return taskRepository.findByUserId(userId);
     }
 
+    public void deleteByUserId(String userId) {
+        taskRepository.deleteByUserId(userId);
+
+    }
+
     @Transactional
     public void deleteTaskById(String taskId) {
         if (taskRepository.existsById(taskId)) {
