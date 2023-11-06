@@ -3,6 +3,7 @@ package com.unifacisa.tasklist.services;
 import com.unifacisa.tasklist.exceptions.EmailAlreadyRegisteredException;
 import com.unifacisa.tasklist.exceptions.IncompatibleIdsException;
 import com.unifacisa.tasklist.exceptions.ResourceNotFoundException;
+import com.unifacisa.tasklist.models.TaskModel;
 import com.unifacisa.tasklist.models.UserModel;
 import com.unifacisa.tasklist.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,12 +22,18 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TaskService taskService;
 
     @Transactional
     public UserModel findUserById(String userId) {
         Optional<UserModel> userModelOptional = userRepository.findById(userId);
 
         if (userModelOptional.isPresent()) {
+            UserModel userModel = userModelOptional.get();
+
+            List<TaskModel> tasks = taskService.findTasksByUserId(userId);
+            userModel.setTasks(tasks);
             return userModelOptional.get();
         } else {
             throw new ResourceNotFoundException("Resource: User. Not found with id: " + userId);
@@ -59,7 +66,8 @@ public class UserService {
         }
 
 
-        BeanUtils.copyProperties(updatedUserModel, existingUserModel, "createdAt, updatedAt");
+        updatedUserModel.setCreatedAt(existingUserModel.getCreatedAt());
+        BeanUtils.copyProperties(updatedUserModel, existingUserModel);
         return userRepository.save(existingUserModel);
     }
 

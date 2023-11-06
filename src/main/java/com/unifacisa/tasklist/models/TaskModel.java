@@ -32,7 +32,7 @@ public class TaskModel {
     @Enumerated(value = EnumType.STRING)
     private StatusEnum status;
 
-    private UserModel user;
+    private String userId;
 
     @CreatedDate
     private LocalDateTime createdAt;

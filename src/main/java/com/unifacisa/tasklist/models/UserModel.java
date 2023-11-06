@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -31,7 +32,7 @@ public class UserModel {
     @Indexed(unique = true)
     private String email;
 
-    private Set<TaskModel> tasks;
+    private List<TaskModel> tasks;
 
     @CreatedDate
     private LocalDateTime createdAt;

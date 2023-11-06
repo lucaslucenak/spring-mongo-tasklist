@@ -4,14 +4,11 @@ import com.unifacisa.tasklist.dtos.TaskDto;
 import com.unifacisa.tasklist.exceptions.IncompatibleIdsException;
 import com.unifacisa.tasklist.exceptions.ResourceNotFoundException;
 import com.unifacisa.tasklist.models.TaskModel;
-import com.unifacisa.tasklist.models.UserModel;
 import com.unifacisa.tasklist.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +20,6 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
-    @Autowired
-    private UserService userService;
 
     @Transactional
     public TaskModel findTaskById(String taskId) {
@@ -45,8 +40,6 @@ public class TaskService {
     @Transactional
     public TaskModel saveTask(TaskDto taskDto) {
         TaskModel taskModel = new TaskModel(taskDto);
-        UserModel userModel = userService.findUserById(taskDto.getUserId());
-        taskModel.setUser(userModel);
 
         return taskRepository.save(taskModel);
     }
@@ -59,8 +52,13 @@ public class TaskService {
 
         TaskModel existingTaskModel = this.findTaskById(taskId);
 
-        BeanUtils.copyProperties(updatedTaskModel, existingTaskModel, "createdAt, updatedAt");
+        updatedTaskModel.setCreatedAt(existingTaskModel.getCreatedAt());
+        BeanUtils.copyProperties(updatedTaskModel, existingTaskModel);
         return taskRepository.save(existingTaskModel);
+    }
+
+    public List<TaskModel> findTasksByUserId(String userId) {
+        return taskRepository.findByUserId(userId);
     }
 
     @Transactional
