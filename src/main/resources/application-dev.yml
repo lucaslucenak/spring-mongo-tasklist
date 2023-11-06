@@ -7,8 +7,7 @@ spring:
       database: tasklist
       port: 27017
       host: localhost
+      auto-index-creation: true
   jpa:
-    database: POSTGRESQL
-    show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop

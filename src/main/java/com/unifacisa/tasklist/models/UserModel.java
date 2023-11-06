@@ -5,6 +5,7 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -21,10 +22,12 @@ public class UserModel {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String username;
 
     private String password;
 
+    @Indexed(unique = true)
     private String email;
 
     private Set<TaskModel> tasks;
