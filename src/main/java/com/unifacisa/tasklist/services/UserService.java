@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,8 +34,8 @@ public class UserService {
     }
 
     @Transactional
-    public Page<UserModel> findAllUsersPaginated(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public List<UserModel> findAllUsers() {
+        return userRepository.findAll();
     }
 
     @Transactional

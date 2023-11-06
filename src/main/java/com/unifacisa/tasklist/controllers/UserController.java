@@ -27,13 +27,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UserModel>> getAllUsers(Pageable pageable) {
-        List<UserModel> userReturnDtos = new ArrayList<>();
-        for (UserModel i : userService.findAllUsersPaginated(pageable)) {
-            userReturnDtos.add(i);
-        }
-        Page<UserModel> userReturnDtoPage = new PageImpl<>(userReturnDtos, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), userReturnDtos.size());
-        return ResponseEntity.ok().body(userReturnDtoPage);
+    public ResponseEntity<List<UserModel>> getAllUsers( ) {
+        return ResponseEntity.ok().body(userService.findAllUsers());
     }
 
     @PostMapping

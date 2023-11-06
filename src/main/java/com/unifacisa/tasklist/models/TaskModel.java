@@ -1,10 +1,12 @@
 package com.unifacisa.tasklist.models;
 
+import com.unifacisa.tasklist.dtos.TaskDto;
 import com.unifacisa.tasklist.enums.StatusEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,7 +32,7 @@ public class TaskModel {
     @Enumerated(value = EnumType.STRING)
     private StatusEnum status;
 
-    private String userId;
+    private UserModel user;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -38,4 +40,7 @@ public class TaskModel {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    public TaskModel(TaskDto taskDto) {
+        BeanUtils.copyProperties(taskDto, this);
+    }
 }

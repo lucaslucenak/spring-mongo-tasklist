@@ -1,5 +1,6 @@
 package com.unifacisa.tasklist.controllers;
 
+import com.unifacisa.tasklist.dtos.TaskDto;
 import com.unifacisa.tasklist.models.TaskModel;
 import com.unifacisa.tasklist.services.TaskService;
 import jakarta.validation.Valid;
@@ -29,17 +30,12 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TaskModel>> getAllTasks(Pageable pageable) {
-        List<TaskModel> taskReturnDtos = new ArrayList<>();
-        for (TaskModel i : taskService.findAllTasksPaginated(pageable)) {
-            taskReturnDtos.add(i);
-        }
-        Page<TaskModel> taskReturnDtoPage = new PageImpl<>(taskReturnDtos, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()), taskReturnDtos.size());
-        return ResponseEntity.ok().body(taskReturnDtoPage);
+    public ResponseEntity<List<TaskModel>> getAllTasks() {
+        return ResponseEntity.ok().body(taskService.findAllTasks());
     }
 
     @PostMapping
-    public ResponseEntity<TaskModel> saveTask(@RequestBody @Valid TaskModel taskPostDto) {
+    public ResponseEntity<TaskModel> saveTask(@RequestBody @Valid TaskDto taskPostDto) {
         return ResponseEntity.ok().body(taskService.saveTask(taskPostDto));
     }
 
