@@ -1,6 +1,7 @@
 package com.unifacisa.tasklist.controllers;
 
 import com.unifacisa.tasklist.dtos.TaskDto;
+import com.unifacisa.tasklist.enums.StatusEnum;
 import com.unifacisa.tasklist.models.TaskModel;
 import com.unifacisa.tasklist.services.TaskService;
 import jakarta.validation.Valid;
@@ -37,6 +38,12 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskModel> saveTask(@RequestBody @Valid TaskDto taskPostDto) {
         return ResponseEntity.ok().body(taskService.saveTask(taskPostDto));
+    }
+
+    @PatchMapping("/{taskId}/status/{newStatus}")
+    public ResponseEntity<TaskModel> updateTaskStatus(@PathVariable String taskId, @PathVariable StatusEnum newStatus) {
+        return ResponseEntity.ok(taskService.updateTaskStatus(taskId, newStatus));
+
     }
 
     @PutMapping(value = "/{taskId}")

@@ -1,5 +1,8 @@
 package com.unifacisa.tasklist.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum StatusEnum {
     TO_DO("TO DO"),
     DOING("DOING"),

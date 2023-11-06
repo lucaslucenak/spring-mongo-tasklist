@@ -1,6 +1,7 @@
 package com.unifacisa.tasklist.services;
 
 import com.unifacisa.tasklist.dtos.TaskDto;
+import com.unifacisa.tasklist.enums.StatusEnum;
 import com.unifacisa.tasklist.exceptions.IncompatibleIdsException;
 import com.unifacisa.tasklist.exceptions.ResourceNotFoundException;
 import com.unifacisa.tasklist.models.TaskModel;
@@ -57,13 +58,22 @@ public class TaskService {
         return taskRepository.save(existingTaskModel);
     }
 
+    public TaskModel updateTaskStatus(String id, StatusEnum newStatus) {
+        TaskModel existingTask = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+
+        // Atualiza apenas o status
+        existingTask.setStatus(newStatus);
+
+        return taskRepository.save(existingTask);
+    }
+
     public List<TaskModel> findTasksByUserId(String userId) {
         return taskRepository.findByUserId(userId);
     }
 
     public void deleteByUserId(String userId) {
         taskRepository.deleteByUserId(userId);
-
     }
 
     @Transactional
