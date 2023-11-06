@@ -62,7 +62,6 @@ public class TaskService {
         TaskModel existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
 
-        // Atualiza apenas o status
         existingTask.setStatus(newStatus);
 
         return taskRepository.save(existingTask);
