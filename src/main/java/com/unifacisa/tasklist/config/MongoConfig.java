@@ -13,20 +13,5 @@ import java.util.Collections;
 
 @Configuration
 @EnableMongoAuditing
-public class MongoConfig extends AbstractMongoClientConfiguration {
-
-    @Override
-    protected String getDatabaseName() {
-        return "tasklist";
-    }
-
-    @Override
-    public MongoClient mongoClient() {
-        return MongoClients.create(); // Configurar conforme necessário
-    }
-
-    @Bean
-    public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoClient(), getDatabaseName());
-    }
+public class MongoConfig {
 }

@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "user")
-public class UserModel extends RepresentationModel<TaskModel> {
+public class UserModel {
 
     @Id
     private String id;

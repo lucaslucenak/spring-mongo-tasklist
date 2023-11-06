@@ -13,34 +13,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-//@EnableMongoRepositories(basePackages = "com.unifacisa.tasklist.repositories")
 public class TasklistApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TasklistApplication.class, args);
 	}
-
-//	@Bean
-//	CommandLineRunner runner (UserService userService, TaskRepository taskRepository) {
-//		return args -> {
-//			UserModel user = UserModel.builder()
-//					.username("lucaslucena")
-//					.password("123456")
-//					.email("lucas.lucenak@gmail.com")
-//					.build();
-//			if (!userService.existsByEmail("lucas.lucenak@gmail.com")) {
-//				userService.saveUser(user);
-//			}
-//			TaskModel task1 = TaskModel.builder()
-//					.title("Passear com o cachorro de sônia")
-//					.description("Achei na olx")
-//					.status(StatusEnum.TO_DO)
-//					.userId(user.getId())
-//					.build();
-//			taskRepository.save(task1);
-//		};
-//
-//
-//	}
 
 }

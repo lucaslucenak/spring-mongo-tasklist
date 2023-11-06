@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "task")
-public class TaskModel extends RepresentationModel<TaskModel> {
+public class TaskModel {
 
     @Id
     private String id;
