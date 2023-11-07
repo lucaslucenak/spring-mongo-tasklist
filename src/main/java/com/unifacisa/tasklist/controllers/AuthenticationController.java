@@ -33,15 +33,18 @@ public class AuthenticationController {
     private UserRepository userRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
-    @PostMapping
+    @PostMapping(value = "/login")
     public ResponseEntity<JwtAuthenticatedDto> login(@RequestBody @Valid AuthenticationDto authenticationPostDto) {
 
         var clientAccountPassword = new UsernamePasswordAuthenticationToken(authenticationPostDto.getUsername(), authenticationPostDto.getPassword());
         var auth = authenticationManager.authenticate(clientAccountPassword);
 
-        var jwtToken = jwtTokenService.generateJwtToken(new UserModel(userRepository.findByUsername(authenticationPostDto.getUsername())));
+        var jwtToken = jwtTokenService.generateJwtToken(userService.findUserByUsername(authenticationPostDto.getUsername()));
 
         return ResponseEntity.ok(new JwtAuthenticatedDto(jwtToken));
     }

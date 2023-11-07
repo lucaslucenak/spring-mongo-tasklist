@@ -12,11 +12,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 @Component
-public class SecurityFilterUtil {
+public class SecurityFilterUtil extends OncePerRequestFilter {
 
     @Autowired
     private JwtTokenService jwtTokenService;
@@ -28,7 +29,7 @@ public class SecurityFilterUtil {
 
         if (jwtToken != null) {
             var username = jwtTokenService.validateJwtToken(jwtToken);
-            UserDetails userDetails = userRepository.findByUsername(username);
+            UserDetails userDetails = userRepository.findUserDetailsByUsername(username);
 
             var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

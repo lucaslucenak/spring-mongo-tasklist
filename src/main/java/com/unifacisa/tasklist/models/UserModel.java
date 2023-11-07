@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.UniqueConstraint;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -50,7 +51,8 @@ public class UserModel implements UserDetails {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public UserModel(UserDetails byUsername) {
+    public UserModel(UserDetails userDetails) {
+        BeanUtils.copyProperties(userDetails, this);
     }
 
     @Override

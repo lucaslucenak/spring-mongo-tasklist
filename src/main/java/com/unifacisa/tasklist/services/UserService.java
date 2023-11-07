@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public UserModel findUserById(String userId) {
@@ -41,6 +44,19 @@ public class UserService {
     }
 
     @Transactional
+    public UserModel findUserByUsername(String username) {
+        Optional<UserModel> userModelOptional = userRepository.findUserModelByUsername(username);
+
+        if (userModelOptional.isPresent()) {
+            UserModel userModel = userModelOptional.get();
+
+            return userModelOptional.get();
+        } else {
+            throw new ResourceNotFoundException("Resource: User. Not found with username: " + username);
+        }
+    }
+
+    @Transactional
     public List<UserModel> findAllUsers() {
         return userRepository.findAll();
     }
@@ -49,6 +65,9 @@ public class UserService {
     public UserModel saveUser(UserModel userModel) {
 
         if (userRepository.existsByEmail(userModel.getEmail())) throw new EmailAlreadyRegisteredException("Email already registered");
+
+        String encryptedPassword = bCryptPasswordEncoder.encode(userModel.getPassword());
+        userModel.setPassword(encryptedPassword);
 
         return userRepository.save(userModel);
     }
