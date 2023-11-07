@@ -3,6 +3,7 @@ package com.unifacisa.tasklist.services;
 import com.unifacisa.tasklist.exceptions.EmailAlreadyRegisteredException;
 import com.unifacisa.tasklist.exceptions.IncompatibleIdsException;
 import com.unifacisa.tasklist.exceptions.ResourceNotFoundException;
+import com.unifacisa.tasklist.exceptions.UsernameAlreadyRegisteredException;
 import com.unifacisa.tasklist.models.TaskModel;
 import com.unifacisa.tasklist.models.UserModel;
 import com.unifacisa.tasklist.repositories.UserRepository;
@@ -48,7 +49,6 @@ public class UserService {
         Optional<UserModel> userModelOptional = userRepository.findUserModelByUsername(username);
 
         if (userModelOptional.isPresent()) {
-            UserModel userModel = userModelOptional.get();
 
             return userModelOptional.get();
         } else {
@@ -65,6 +65,7 @@ public class UserService {
     public UserModel saveUser(UserModel userModel) {
 
         if (userRepository.existsByEmail(userModel.getEmail())) throw new EmailAlreadyRegisteredException("Email already registered");
+        if (userRepository.existsByUsername(userModel.getUsername())) throw new UsernameAlreadyRegisteredException( "Username already registered");
 
         String encryptedPassword = bCryptPasswordEncoder.encode(userModel.getPassword());
         userModel.setPassword(encryptedPassword);
