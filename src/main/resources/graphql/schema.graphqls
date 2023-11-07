@@ -1,0 +1,47 @@
+type Task {
+    id: ID!
+    title: String!
+    description: String
+    status: StatusEnum!
+    userId: String!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type User {
+    id: ID!
+    username: String!
+    password: String!
+    email: String!
+    role: RoleEnum!
+    tasks: [Task]
+    createdAt: String!
+    updatedAt: String!
+}
+
+enum StatusEnum {
+    TO_DO
+    DOING
+    DONE
+}
+
+enum RoleEnum {
+    ADMIN
+    USER
+}
+
+type Query {
+    getAllTasks: [Task]
+    getTask(id: ID!): Task
+    getAllUsers: [User]
+    getUser(id: ID!): User
+}
+
+type Mutation {
+    createTask(title: String!, description: String, userId: String!, status: StatusEnum!): Task
+    updateTask(id: ID!, title: String, description: String, status: StatusEnum): Task
+    deleteTask(id: ID!): Boolean
+    createUser(username: String!, password: String!, email: String!, role: RoleEnum!): User
+    updateUser(id: ID!, username: String, password: String, email: String, role: RoleEnum): User
+    deleteUser(id: ID!): Boolean
+}

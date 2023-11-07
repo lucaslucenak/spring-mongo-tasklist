@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
+@EnableMongoRepositories(basePackageClasses = TaskRepository.class)
 public class TasklistApplication {
 
 	public static void main(String[] args) {
