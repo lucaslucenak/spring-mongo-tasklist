@@ -2,7 +2,7 @@ package com.unifacisa.tasklist.exceptions.handlers;
 
 import com.unifacisa.tasklist.dtos.ExceptionHandlerDto;
 import com.unifacisa.tasklist.exceptions.EmailAlreadyRegisteredException;
-import com.unifacisa.tasklist.exceptions.ResourceNotFoundException;
+import com.unifacisa.tasklist.exceptions.UsernameAlreadyRegisteredException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
-public class EmailAlreadyRegisteredExceptionHandler {
+public class UsernameAlreadyRegisteredExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    @ExceptionHandler(EmailAlreadyRegisteredException.class)
-    public ResponseEntity<ExceptionHandlerDto<?>> handle(EmailAlreadyRegisteredException ex) {
+    @ExceptionHandler(UsernameAlreadyRegisteredException.class)
+    public ResponseEntity<ExceptionHandlerDto<?>> handle(UsernameAlreadyRegisteredException ex) {
         ExceptionHandlerDto<String> handlerDto = new ExceptionHandlerDto<>();
 
         Map<String, String> errors = new HashMap<>();
@@ -31,8 +31,6 @@ public class EmailAlreadyRegisteredExceptionHandler {
         handlerDto.setErrors(errors);
         handlerDto.setHttpStatus(HttpStatus.BAD_REQUEST);
         handlerDto.setLocalDateTime(LocalDateTime.now(ZoneId.of("Z")));
-
-        handlerDto.setValidExamples(List.of("email.email@email.com", "email.123@email.com.br", "email.122312@email.edu.com.br"));
 
         return ResponseEntity.badRequest().body(handlerDto);
     }
