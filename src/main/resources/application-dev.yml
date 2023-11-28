@@ -8,8 +8,9 @@ spring:
 #      port: 27017
 #      host: localhost
 #      auto-index-creation: true
-      uri: mongodb+srv://admin:admin@lucaslucenak.vm9cmaj.mongodb.net/?retryWrites=true&w=majority
-      database: tasklist
+#      uri: mongodb+srv://admin:admin@lucaslucenak.vm9cmaj.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb://localhost:27017/tasklist
+#      database: tasklist
 #  jpa:
 #    hibernate:
 #      ddl-auto: create-drop
