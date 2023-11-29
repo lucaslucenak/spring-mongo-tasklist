@@ -26,6 +26,11 @@ public class TaskController {
         return ResponseEntity.ok().body(taskService.findTaskById(taskId));
     }
 
+    @GetMapping(value = "/by-user-id/{userId}")
+    public ResponseEntity<List<TaskModel>> getTasksByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok().body(taskService.findTasksByUserId(userId));
+    }
+
     @GetMapping
     public ResponseEntity<List<TaskModel>> getAllTasks() {
         return ResponseEntity.ok().body(taskService.findAllTasks());
@@ -36,7 +41,7 @@ public class TaskController {
         return ResponseEntity.ok().body(taskService.saveTask(taskPostDto));
     }
 
-    @PatchMapping("/{taskId}/status/{newStatus}")
+    @PostMapping("/{taskId}/status/{newStatus}")
     public ResponseEntity<TaskModel> updateTaskStatus(@PathVariable String taskId, @PathVariable StatusEnum newStatus) {
         return ResponseEntity.ok(taskService.updateTaskStatus(taskId, newStatus));
 

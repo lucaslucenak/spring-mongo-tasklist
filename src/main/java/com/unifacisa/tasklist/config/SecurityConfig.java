@@ -41,9 +41,11 @@ public class SecurityConfig {
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/user")).authenticated()
                 // Task
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/task")).authenticated()
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/task/by-user-id/{userId}")).authenticated()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/task")).authenticated()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.PUT, "/task")).authenticated()
-                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/task")).authenticated()
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/task/**/status/**")).authenticated()
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/task/{taskId}")).authenticated()
         );
 
         httpSecurity.addFilterBefore(securityFilterUtil, UsernamePasswordAuthenticationFilter.class);
