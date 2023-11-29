@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends MongoRepository<TaskModel, String> {
     List<TaskModel> findByUserId(String userId);
+
     void deleteByUserId(String userId);
 }
